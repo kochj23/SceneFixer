@@ -163,6 +163,37 @@ class HomeKitManager: NSObject, ObservableObject {
         }
     }
 
+    // MARK: - Device Management
+
+    #if !os(tvOS)
+    func removeDevice(_ device: DeviceInfo) async throws {
+        guard let home = home else {
+            throw HomeKitError.noHomeSelected
+        }
+
+        guard let accessory = getAccessory(for: device) else {
+            throw HomeKitError.deviceNotFound
+        }
+
+        NSLog("[HomeKitManager] Removing device: %@", device.name)
+
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            home.removeAccessory(accessory) { error in
+                if let error = error {
+                    NSLog("[HomeKitManager] Failed to remove device: %@", error.localizedDescription)
+                    continuation.resume(throwing: error)
+                } else {
+                    NSLog("[HomeKitManager] Successfully removed device: %@", device.name)
+                    continuation.resume()
+                }
+            }
+        }
+
+        // Refresh the device list
+        await refreshAll()
+    }
+    #endif
+
     // MARK: - Scene Control
 
     func getActionSet(for scene: SceneInfo) -> HMActionSet? {
@@ -274,6 +305,7 @@ enum HomeKitError: LocalizedError {
     case sceneNotFound
     case notReachable
     case unauthorized
+    case noHomeSelected
 
     var errorDescription: String? {
         switch self {
@@ -281,6 +313,7 @@ enum HomeKitError: LocalizedError {
         case .sceneNotFound: return "Scene not found in HomeKit"
         case .notReachable: return "Device is not reachable"
         case .unauthorized: return "HomeKit access not authorized"
+        case .noHomeSelected: return "No home selected"
         }
     }
 }

@@ -151,6 +151,20 @@ class SceneAnalyzer: ObservableObject {
         }
 
         if removingUnreachable {
+            #if os(tvOS)
+            // Scene repair (removing actions) is not available on tvOS
+            // HomeKit's removeAction API is unavailable on this platform
+            let repairAction = SceneRepairAction(
+                sceneId: scene.id,
+                sceneName: scene.name,
+                actionType: .removeDevice,
+                success: false,
+                message: "Scene repair is not available on Apple TV. Use iPhone or iPad to repair scenes."
+            )
+            repairHistory.append(repairAction)
+            NSLog("[SceneAnalyzer] Scene repair not available on tvOS for scene '%@'", scene.name)
+            return false
+            #else
             // Find actions associated with unreachable devices
             let actionsToRemove = actionSet.actions.filter { action in
                 guard let characteristic = (action as? NSObject)?.value(forKey: "characteristic") as? HMCharacteristic,
@@ -192,6 +206,7 @@ class SceneAnalyzer: ObservableObject {
 
             NSLog("[SceneAnalyzer] Repaired scene '%@' - removed %d actions", scene.name, actionsToRemove.count)
             return true
+            #endif
         }
 
         return false

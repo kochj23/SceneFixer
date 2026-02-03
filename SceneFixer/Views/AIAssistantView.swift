@@ -77,7 +77,8 @@ struct AIAssistantView: View {
                     .padding(.vertical, 8)
                 }
 
-                // Input area
+                #if !os(tvOS)
+                // Input area (not available on tvOS - no keyboard)
                 HStack(spacing: 12) {
                     TextField("Ask about your smart home...", text: $userInput)
                         .textFieldStyle(.roundedBorder)
@@ -94,7 +95,19 @@ struct AIAssistantView: View {
                     .disabled(userInput.isEmpty || aiAssistant.isProcessing)
                 }
                 .padding(16)
-                .background(Color(.systemGray6))
+                .background(Color.platformBackground)
+                #else
+                // tvOS: Show message that text input is not available
+                HStack {
+                    Image(systemName: "keyboard")
+                        .foregroundColor(.secondary)
+                    Text("Use suggestion buttons above or control from iPhone/iPad")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .padding()
+                .background(Color.platformBackground)
+                #endif
             }
             .navigationTitle("AI Assistant")
             .toolbar {
@@ -209,7 +222,7 @@ struct ChatBubble: View {
                     .padding(12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(message.role == .user ? Color.blue : Color(.systemGray6))
+                            .fill(message.role == .user ? Color.blue : Color.platformBackground)
                     )
                     .foregroundColor(message.role == .user ? .white : .primary)
 
@@ -281,7 +294,9 @@ struct AISettingsSheet: View {
                 }
             }
             .navigationTitle("AI Settings")
+            #if !os(tvOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {

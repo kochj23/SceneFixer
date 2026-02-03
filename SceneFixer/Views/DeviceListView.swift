@@ -67,8 +67,11 @@ struct DeviceListView: View {
                 }
             }
             .listStyle(.plain)
+            #if !os(tvOS)
             .searchable(text: $searchText, prompt: "Search devices...")
+            #endif
             .navigationTitle("Devices")
+            #if !os(tvOS)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
@@ -106,6 +109,7 @@ struct DeviceListView: View {
                     .disabled(deviceTester.isTesting)
                 }
             }
+            #endif
         }
     }
 }
@@ -224,7 +228,7 @@ struct DeviceDetailView: View {
                 .padding(.horizontal)
 
                 // Info sections
-                GroupBox("Device Information") {
+                PlatformGroupBox("Device Information") {
                     VStack(alignment: .leading, spacing: 10) {
                         DeviceInfoRow(label: "Category", value: device.category.rawValue)
                         DeviceInfoRow(label: "Manufacturer", value: device.manufacturer.rawValue)
@@ -240,7 +244,7 @@ struct DeviceDetailView: View {
                 }
                 .padding(.horizontal)
 
-                GroupBox("Health Metrics") {
+                PlatformGroupBox("Health Metrics") {
                     VStack(alignment: .leading, spacing: 10) {
                         DeviceInfoRow(label: "Reachable", value: device.isReachable ? "Yes" : "No")
                         DeviceInfoRow(label: "Reliability", value: String(format: "%.1f%%", device.reliabilityScore))
@@ -257,7 +261,7 @@ struct DeviceDetailView: View {
                 .padding(.horizontal)
 
                 if !device.sceneNames.isEmpty {
-                    GroupBox("Scenes (\(device.sceneCount))") {
+                    PlatformGroupBox("Scenes (\(device.sceneCount))") {
                         VStack(alignment: .leading, spacing: 8) {
                             ForEach(device.sceneNames, id: \.self) { name in
                                 HStack {
@@ -278,7 +282,9 @@ struct DeviceDetailView: View {
             .padding(.vertical)
         }
         .navigationTitle("Device Details")
+        #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     private func formatDate(_ date: Date) -> String {

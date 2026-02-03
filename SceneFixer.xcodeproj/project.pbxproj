@@ -21,6 +21,29 @@
 		F10000270000000100000021 /* DeviceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000280000000100000022 /* DeviceListView.swift */; };
 		F1000033000000010000002D /* SceneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000034000000010000002E /* SceneListView.swift */; };
 		F10000370000000100000037 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000380000000100000038 /* SettingsView.swift */; };
+		F10000390000000100000039 /* Color+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000040000000010000003A /* Color+Platform.swift */; };
+		F1000044000000010000003E /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000041000000010000003B /* CardDetailView.swift */; };
+		F1000045000000010000003F /* DeviceDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000042000000010000003C /* DeviceDetailSheet.swift */; };
+		F10000460000000100000040 /* SceneDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000043000000010000003D /* SceneDetailSheet.swift */; };
+/* tvOS Build Files */
+		F20000010000000200000001 /* SceneFixerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000020000000100000002 /* SceneFixerApp.swift */; };
+		F20000030000000200000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000040000000100000004 /* ContentView.swift */; };
+		F20000050000000200000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F10000060000000100000006 /* Assets.xcassets */; };
+		F20000070000000200000007 /* DeviceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000080000000100000008 /* DeviceModels.swift */; };
+		F20000090000000200000009 /* SceneModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000010000000010000000A /* SceneModels.swift */; };
+		F2000011000000020000000B /* HomeKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000012000000010000000C /* HomeKitManager.swift */; };
+		F2000013000000020000000D /* DeviceTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000014000000010000000E /* DeviceTester.swift */; };
+		F2000015000000020000000F /* SceneAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000160000000100000010 /* SceneAnalyzer.swift */; };
+		F20000170000000200000011 /* AIAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000180000000100000012 /* AIAssistant.swift */; };
+		F2000023000000020000001D /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000024000000010000001E /* DashboardView.swift */; };
+		F2000025000000020000001F /* AIAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000260000000100000020 /* AIAssistantView.swift */; };
+		F20000270000000200000021 /* DeviceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000280000000100000022 /* DeviceListView.swift */; };
+		F2000033000000020000002D /* SceneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000034000000010000002E /* SceneListView.swift */; };
+		F20000370000000200000037 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10000380000000100000038 /* SettingsView.swift */; };
+		F20000390000000200000039 /* Color+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000040000000010000003A /* Color+Platform.swift */; };
+		F2000044000000020000003E /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000041000000010000003B /* CardDetailView.swift */; };
+		F2000045000000020000003F /* DeviceDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000042000000010000003C /* DeviceDetailSheet.swift */; };
+		F20000460000000200000040 /* SceneDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1000043000000010000003D /* SceneDetailSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,10 +64,25 @@
 		F10000380000000100000038 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F10000600000000100000060 /* SceneFixer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SceneFixer.entitlements; sourceTree = "<group>"; };
 		F10000700000000100000070 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1000040000000010000003A /* Color+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Platform.swift"; sourceTree = "<group>"; };
+		F1000041000000010000003B /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		F1000042000000010000003C /* DeviceDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailSheet.swift; sourceTree = "<group>"; };
+		F1000043000000010000003D /* SceneDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDetailSheet.swift; sourceTree = "<group>"; };
+/* tvOS File References */
+		F20000500000000200000050 /* SceneFixer-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SceneFixer-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F20000600000000200000060 /* SceneFixer-tvOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "SceneFixer-tvOS.entitlements"; sourceTree = "<group>"; };
+		F20000700000000200000070 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F1000070000000010000007A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2000070000000020000007A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -69,6 +107,8 @@
 				F10000830000000100000083 /* Models */,
 				F10000840000000100000084 /* Services */,
 				F10000850000000100000085 /* Views */,
+				F10000860000000100000086 /* Extensions */,
+				F10000870000000100000087 /* tvOS */,
 				F10000060000000100000006 /* Assets.xcassets */,
 				F10000600000000100000060 /* SceneFixer.entitlements */,
 				F10000700000000100000070 /* Info.plist */,
@@ -80,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				F10000500000000100000050 /* SceneFixer.app */,
+				F20000500000000200000050 /* SceneFixer-tvOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,8 +154,28 @@
 				F10000280000000100000022 /* DeviceListView.swift */,
 				F1000034000000010000002E /* SceneListView.swift */,
 				F10000380000000100000038 /* SettingsView.swift */,
+				F1000041000000010000003B /* CardDetailView.swift */,
+				F1000042000000010000003C /* DeviceDetailSheet.swift */,
+				F1000043000000010000003D /* SceneDetailSheet.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F10000860000000100000086 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F1000040000000010000003A /* Color+Platform.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F10000870000000100000087 /* tvOS */ = {
+			isa = PBXGroup;
+			children = (
+				F20000600000000200000060 /* SceneFixer-tvOS.entitlements */,
+				F20000700000000200000070 /* Info.plist */,
+			);
+			path = tvOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +198,23 @@
 			productReference = F10000500000000100000050 /* SceneFixer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F20000900000000200000090 /* SceneFixer-tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F20000910000000200000091 /* Build configuration list for PBXNativeTarget "SceneFixer-tvOS" */;
+			buildPhases = (
+				F20000920000000200000092 /* Sources */,
+				F2000070000000020000007A /* Frameworks */,
+				F20000930000000200000093 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SceneFixer-tvOS";
+			productName = "SceneFixer-tvOS";
+			productReference = F20000500000000200000050 /* SceneFixer-tvOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -148,6 +226,9 @@
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					F10000900000000100000090 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					F20000900000000200000090 = {
 						CreatedOnToolsVersion = 15.4;
 					};
 				};
@@ -166,6 +247,7 @@
 			projectRoot = "";
 			targets = (
 				F10000900000000100000090 /* SceneFixer */,
+				F20000900000000200000090 /* SceneFixer-tvOS */,
 			);
 		};
 /* End PBXProject section */
@@ -176,6 +258,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F10000050000000100000005 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F20000930000000200000093 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F20000050000000200000005 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,6 +289,34 @@
 				F10000270000000100000021 /* DeviceListView.swift in Sources */,
 				F1000033000000010000002D /* SceneListView.swift in Sources */,
 				F10000370000000100000037 /* SettingsView.swift in Sources */,
+				F10000390000000100000039 /* Color+Platform.swift in Sources */,
+				F1000044000000010000003E /* CardDetailView.swift in Sources */,
+				F1000045000000010000003F /* DeviceDetailSheet.swift in Sources */,
+				F10000460000000100000040 /* SceneDetailSheet.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F20000920000000200000092 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F20000010000000200000001 /* SceneFixerApp.swift in Sources */,
+				F20000030000000200000003 /* ContentView.swift in Sources */,
+				F20000070000000200000007 /* DeviceModels.swift in Sources */,
+				F20000090000000200000009 /* SceneModels.swift in Sources */,
+				F2000011000000020000000B /* HomeKitManager.swift in Sources */,
+				F2000013000000020000000D /* DeviceTester.swift in Sources */,
+				F2000015000000020000000F /* SceneAnalyzer.swift in Sources */,
+				F20000170000000200000011 /* AIAssistant.swift in Sources */,
+				F2000023000000020000001D /* DashboardView.swift in Sources */,
+				F2000025000000020000001F /* AIAssistantView.swift in Sources */,
+				F20000270000000200000021 /* DeviceListView.swift in Sources */,
+				F2000033000000020000002D /* SceneListView.swift in Sources */,
+				F20000370000000200000037 /* SettingsView.swift in Sources */,
+				F20000390000000200000039 /* Color+Platform.swift in Sources */,
+				F2000044000000020000003E /* CardDetailView.swift in Sources */,
+				F2000045000000020000003F /* DeviceDetailSheet.swift in Sources */,
+				F20000460000000200000040 /* SceneDetailSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +465,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jordankoch.SceneFixer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -381,7 +499,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jordankoch.SceneFixer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -389,6 +507,70 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* tvOS Build Configurations */
+		F20000B20000000200000B02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SceneFixer/tvOS/SceneFixer-tvOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QRRCB8HB3W;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SceneFixer/tvOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SceneFixer;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Jordan Koch. All rights reserved.";
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jordankoch.SceneFixer;
+				PRODUCT_NAME = SceneFixer;
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+			};
+			name = Debug;
+		};
+		F20000B30000000200000B03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SceneFixer/tvOS/SceneFixer-tvOS.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QRRCB8HB3W;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SceneFixer/tvOS/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SceneFixer;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Jordan Koch. All rights reserved.";
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jordankoch.SceneFixer;
+				PRODUCT_NAME = SceneFixer;
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.0;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -409,6 +591,15 @@
 			buildConfigurations = (
 				F10000B20000000100000B02 /* Debug */,
 				F10000B30000000100000B03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F20000910000000200000091 /* Build configuration list for PBXNativeTarget "SceneFixer-tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F20000B20000000200000B02 /* Debug */,
+				F20000B30000000200000B03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

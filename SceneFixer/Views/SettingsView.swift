@@ -11,8 +11,10 @@ struct SettingsView: View {
     @EnvironmentObject var aiAssistant: AIAssistant
     @EnvironmentObject var homeKitManager: HomeKitManager
 
+    #if !os(tvOS)
     @State private var anthropicKey = ""
     @State private var openAIKey = ""
+    #endif
 
     var body: some View {
         NavigationStack {
@@ -55,7 +57,8 @@ struct SettingsView: View {
                     }
                 }
 
-                // AI Backend
+                #if !os(tvOS)
+                // AI Backend (not shown on tvOS - no text input)
                 Section("AI Backend") {
                     Picker("Backend", selection: $aiAssistant.currentBackend) {
                         ForEach(AIBackend.allCases, id: \.self) { backend in
@@ -119,6 +122,7 @@ struct SettingsView: View {
                             }
                         }
                 }
+                #endif
 
                 // About
                 Section("About") {
@@ -135,9 +139,19 @@ struct SettingsView: View {
                         Text("Jordan Koch")
                             .foregroundColor(.secondary)
                     }
+
+                    #if os(tvOS)
+                    HStack {
+                        Text("Platform")
+                        Spacer()
+                        Text("Apple TV")
+                            .foregroundColor(.secondary)
+                    }
+                    #endif
                 }
 
-                // Actions
+                #if !os(tvOS)
+                // Actions (not needed on tvOS without AI chat)
                 Section {
                     Button(role: .destructive) {
                         aiAssistant.clearConversation()
@@ -145,6 +159,7 @@ struct SettingsView: View {
                         Label("Clear AI Conversation", systemImage: "trash")
                     }
                 }
+                #endif
             }
             .navigationTitle("Settings")
         }

@@ -38,8 +38,11 @@ struct SceneListView: View {
                 }
             }
             .listStyle(.plain)
+            #if !os(tvOS)
             .searchable(text: $searchText, prompt: "Search scenes...")
+            #endif
             .navigationTitle("Scenes")
+            #if !os(tvOS)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Menu {
@@ -69,6 +72,7 @@ struct SceneListView: View {
                     .disabled(sceneAnalyzer.isAnalyzing)
                 }
             }
+            #endif
         }
     }
 }
@@ -188,7 +192,7 @@ struct SceneDetailView: View {
                 .padding(.horizontal)
 
                 // Health bar
-                GroupBox("Scene Health") {
+                PlatformGroupBox("Scene Health") {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack {
                             Text("Health Score")
@@ -216,7 +220,7 @@ struct SceneDetailView: View {
 
                 // Working devices
                 if scene.reachableDevices > 0 {
-                    GroupBox("Working Devices (\(scene.reachableDevices))") {
+                    PlatformGroupBox("Working Devices (\(scene.reachableDevices))") {
                         VStack(alignment: .leading, spacing: 8) {
                             ForEach(scene.reachableDeviceNames, id: \.self) { name in
                                 HStack {
@@ -234,7 +238,7 @@ struct SceneDetailView: View {
 
                 // Broken devices
                 if scene.unreachableDevices > 0 {
-                    GroupBox("Unreachable Devices (\(scene.unreachableDevices))") {
+                    PlatformGroupBox("Unreachable Devices (\(scene.unreachableDevices))") {
                         VStack(alignment: .leading, spacing: 8) {
                             ForEach(scene.unreachableDeviceNames, id: \.self) { name in
                                 HStack {
@@ -252,7 +256,7 @@ struct SceneDetailView: View {
 
                 // Last audit
                 if let lastAudit = scene.lastAudit {
-                    GroupBox("Last Audit") {
+                    PlatformGroupBox("Last Audit") {
                         HStack {
                             Text("Date")
                                 .foregroundColor(.secondary)
@@ -270,7 +274,9 @@ struct SceneDetailView: View {
             .padding(.vertical)
         }
         .navigationTitle("Scene Details")
+        #if !os(tvOS)
         .navigationBarTitleDisplayMode(.inline)
+        #endif
     }
 
     var statusColor: Color {

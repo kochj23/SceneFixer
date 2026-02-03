@@ -12,6 +12,28 @@ struct DashboardView: View {
     @EnvironmentObject var deviceTester: DeviceTester
     @EnvironmentObject var sceneAnalyzer: SceneAnalyzer
 
+    // Sheet state
+    @State private var selectedCardType: DashboardCardType?
+    @State private var selectedDevice: DeviceInfo?
+    @State private var selectedScene: SceneInfo?
+
+    // Adaptive column count based on platform
+    private var gridColumns: [GridItem] {
+        #if os(tvOS)
+        return [
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ]
+        #else
+        return [
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ]
+        #endif
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -35,17 +57,17 @@ struct DashboardView: View {
                         .padding(.horizontal)
                     }
 
-                    // Stats cards
-                    LazyVGrid(columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible())
-                    ], spacing: 12) {
+                    // Stats cards - ALL CLICKABLE
+                    LazyVGrid(columns: gridColumns, spacing: 12) {
                         StatsCard(
                             title: "Total Devices",
                             value: "\(homeKitManager.devices.count)",
                             icon: "cpu",
                             color: .blue
                         )
+                        .onTapGesture {
+                            selectedCardType = .totalDevices
+                        }
 
                         let healthy = homeKitManager.devices.filter { $0.healthStatus == .healthy }.count
                         StatsCard(
@@ -54,6 +76,9 @@ struct DashboardView: View {
                             icon: "checkmark.circle.fill",
                             color: .green
                         )
+                        .onTapGesture {
+                            selectedCardType = .healthyDevices
+                        }
 
                         let unreachable = homeKitManager.devices.filter { $0.healthStatus == .unreachable }.count
                         StatsCard(
@@ -62,14 +87,54 @@ struct DashboardView: View {
                             icon: "xmark.circle.fill",
                             color: unreachable > 0 ? .red : .gray
                         )
+                        .onTapGesture {
+                            selectedCardType = .unreachableDevices
+                        }
 
-                        let brokenScenes = homeKitManager.scenes.filter { $0.healthStatus == .broken }.count
+                        let brokenScenes = homeKitManager.scenes.filter { $0.healthStatus == .broken || $0.healthStatus == .degraded }.count
                         StatsCard(
                             title: "Broken Scenes",
                             value: "\(brokenScenes)",
                             icon: "exclamationmark.triangle.fill",
                             color: brokenScenes > 0 ? .orange : .gray
                         )
+                        .onTapGesture {
+                            selectedCardType = .brokenScenes
+                        }
+                    }
+                    .padding(.horizontal)
+
+                    // Additional summary cards
+                    HStack(spacing: 12) {
+                        MiniStatsCard(
+                            title: "Rooms",
+                            value: "\(Set(homeKitManager.devices.compactMap { $0.room }).count)",
+                            icon: "house.fill",
+                            color: .cyan
+                        )
+                        .onTapGesture {
+                            selectedCardType = .roomSummary
+                        }
+
+                        MiniStatsCard(
+                            title: "Scenes",
+                            value: "\(homeKitManager.scenes.count)",
+                            icon: "play.rectangle.on.rectangle",
+                            color: .purple
+                        )
+                        .onTapGesture {
+                            selectedCardType = .allScenes
+                        }
+
+                        MiniStatsCard(
+                            title: "Brands",
+                            value: "\(Set(homeKitManager.devices.map { $0.manufacturer }).count)",
+                            icon: "building.2.fill",
+                            color: .indigo
+                        )
+                        .onTapGesture {
+                            selectedCardType = .manufacturerSummary
+                        }
                     }
                     .padding(.horizontal)
 
@@ -130,13 +195,18 @@ struct DashboardView: View {
 
                     // Devices needing attention
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Devices Needing Attention")
-                            .font(.headline)
-                            .padding(.horizontal)
-
-                        let problemDevices = homeKitManager.devices.filter {
-                            $0.healthStatus == .unreachable || $0.healthStatus == .degraded
+                        HStack {
+                            Text("Devices Needing Attention")
+                                .font(.headline)
+                            Spacer()
+                            if !problemDevices.isEmpty {
+                                Button("View All") {
+                                    selectedCardType = .unreachableDevices
+                                }
+                                .font(.caption)
+                            }
                         }
+                        .padding(.horizontal)
 
                         if problemDevices.isEmpty {
                             HStack {
@@ -153,27 +223,39 @@ struct DashboardView: View {
                         } else {
                             ForEach(problemDevices.prefix(5)) { device in
                                 DeviceStatusRow(device: device)
+                                    .onTapGesture {
+                                        selectedDevice = device
+                                    }
                                     .padding(.horizontal)
                             }
 
                             if problemDevices.count > 5 {
-                                Text("+ \(problemDevices.count - 5) more...")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .padding(.horizontal)
+                                Button {
+                                    selectedCardType = .unreachableDevices
+                                } label: {
+                                    Text("+ \(problemDevices.count - 5) more...")
+                                        .font(.caption)
+                                        .foregroundColor(.blue)
+                                }
+                                .padding(.horizontal)
                             }
                         }
                     }
 
                     // Scenes with issues
                     VStack(alignment: .leading, spacing: 12) {
-                        Text("Scenes with Issues")
-                            .font(.headline)
-                            .padding(.horizontal)
-
-                        let problemScenes = homeKitManager.scenes.filter {
-                            $0.healthStatus == .broken || $0.healthStatus == .degraded
+                        HStack {
+                            Text("Scenes with Issues")
+                                .font(.headline)
+                            Spacer()
+                            if !problemScenes.isEmpty {
+                                Button("View All") {
+                                    selectedCardType = .brokenScenes
+                                }
+                                .font(.caption)
+                            }
                         }
+                        .padding(.horizontal)
 
                         if problemScenes.isEmpty {
                             HStack {
@@ -190,14 +272,21 @@ struct DashboardView: View {
                         } else {
                             ForEach(problemScenes.prefix(5)) { scene in
                                 SceneStatusRow(scene: scene)
+                                    .onTapGesture {
+                                        selectedScene = scene
+                                    }
                                     .padding(.horizontal)
                             }
 
                             if problemScenes.count > 5 {
-                                Text("+ \(problemScenes.count - 5) more...")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .padding(.horizontal)
+                                Button {
+                                    selectedCardType = .brokenScenes
+                                } label: {
+                                    Text("+ \(problemScenes.count - 5) more...")
+                                        .font(.caption)
+                                        .foregroundColor(.blue)
+                                }
+                                .padding(.horizontal)
                             }
                         }
                     }
@@ -205,6 +294,7 @@ struct DashboardView: View {
                 .padding(.vertical)
             }
             .navigationTitle("Dashboard")
+            #if !os(tvOS)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     if homeKitManager.isLoading || deviceTester.isTesting || sceneAnalyzer.isAnalyzing {
@@ -220,6 +310,38 @@ struct DashboardView: View {
                     }
                 }
             }
+            #endif
+        }
+        // Sheet modals
+        .sheet(item: $selectedCardType) { cardType in
+            CardDetailView(cardType: cardType)
+                .environmentObject(homeKitManager)
+                .environmentObject(deviceTester)
+                .environmentObject(sceneAnalyzer)
+        }
+        .sheet(item: $selectedDevice) { device in
+            DeviceDetailSheet(device: device)
+                .environmentObject(homeKitManager)
+                .environmentObject(deviceTester)
+        }
+        .sheet(item: $selectedScene) { scene in
+            SceneDetailSheet(scene: scene)
+                .environmentObject(homeKitManager)
+                .environmentObject(sceneAnalyzer)
+        }
+    }
+
+    // MARK: - Computed Properties
+
+    private var problemDevices: [DeviceInfo] {
+        homeKitManager.devices.filter {
+            $0.healthStatus == .unreachable || $0.healthStatus == .degraded
+        }
+    }
+
+    private var problemScenes: [SceneInfo] {
+        homeKitManager.scenes.filter {
+            $0.healthStatus == .broken || $0.healthStatus == .degraded
         }
     }
 }
@@ -251,6 +373,46 @@ struct StatsCard: View {
             RoundedRectangle(cornerRadius: 12)
                 .fill(color.opacity(0.1))
         )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(color.opacity(0.2), lineWidth: 1)
+        )
+        .contentShape(Rectangle()) // Makes entire card tappable
+    }
+}
+
+struct MiniStatsCard: View {
+    let title: String
+    let value: String
+    let icon: String
+    let color: Color
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: icon)
+                .font(.system(size: 18))
+                .foregroundColor(color)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(value)
+                    .font(.system(size: 18, weight: .bold))
+                Text(title)
+                    .font(.system(size: 10))
+                    .foregroundColor(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .padding(.horizontal, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(color.opacity(0.1))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(color.opacity(0.2), lineWidth: 1)
+        )
+        .contentShape(Rectangle())
     }
 }
 
@@ -307,12 +469,17 @@ struct DeviceStatusRow: View {
                 .padding(.vertical, 4)
                 .background(statusColor.opacity(0.1))
                 .cornerRadius(4)
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 10))
+                .foregroundColor(.secondary)
         }
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color(.systemGray6))
+                .fill(Color.platformBackground)
         )
+        .contentShape(Rectangle())
     }
 
     var statusColor: Color {
@@ -353,12 +520,17 @@ struct SceneStatusRow: View {
                 .padding(.vertical, 4)
                 .background(statusColor.opacity(0.1))
                 .cornerRadius(4)
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 10))
+                .foregroundColor(.secondary)
         }
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(Color(.systemGray6))
+                .fill(Color.platformBackground)
         )
+        .contentShape(Rectangle())
     }
 
     var statusColor: Color {
